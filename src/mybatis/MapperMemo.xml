@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.MapperMemo">
+	<select id = "getMemosByPage" parameterType = "hashmap" resultType = "org.ahsan.board.domain.Memo">
+		select * FROM memo
+		order by no desc limit #{start}, #{stop}
+	</select>
+	<select id = "getTotalMemo" resultType = "int">
+		select count(no) from memo
+	</select>
+	<select id = "checkPassword" parameterType="hashmap" resultType="int">
+		select count(no) from memo
+		WHERE no = #{no} and password = #{password}
+	</select>
+	<insert id = "addMemo" parameterType="org.ahsan.board.domain.Memo" useGeneratedKeys="true" keyProperty="no">
+		insert into memo(memo, writer, password, date) 
+		values(#{memo}, #{writer}, #{password}, now())
+	</insert>
+	<delete id = "removeMemo" parameterType="int">
+		delete from memo where no = #{no}
+	</delete>
+</mapper>

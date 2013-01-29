@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="false" />
+
+    <package name="default" namespace="/" extends="struts-default">
+
+        <default-action-ref name="MemoIndex" />
+
+        <global-results>
+            <result name="error">/board/memo/error.jsp</result>
+        </global-results>
+
+        <global-exception-mappings>
+            <exception-mapping exception="java.lang.Exception" result="error"/>
+        </global-exception-mappings>
+        
+ 		<action name="MemoIndex" class="org.ahsan.board.web.MemoIndex">
+ 		    <result name="success">
+ 		        <param name="location">/board/memo/index.jsp</param>
+ 		    </result>
+ 		</action>
+ 		<action name="MemoWrite" class="org.ahsan.board.web.MemoWrite">
+ 		    <result name="success" type="redirectAction">
+ 		        <param name="actionName">MemoIndex</param>
+ 		    </result>
+ 		</action>
+ 		<action name="MemoCheck" class="org.ahsan.board.web.MemoCheck">
+ 		    <result name="success">
+ 		        <param name="location">/board/memo/check.jsp</param>
+ 		    </result>
+ 		</action>
+ 		<action name="MemoCheckPassword" class="org.ahsan.board.web.MemoCheckPassword">
+ 		    <result name="success" type="redirectAction">
+ 		        <param name="actionName">MemoIndex</param>
+ 		        <param name="page">%{page}</param>
+ 		    </result>
+ 		    <result name="fail">
+ 		        <param name="location">/board/memo/fail.jsp</param>
+ 		    </result>
+ 		</action>
+    </package>
+
+    <!-- Add packages here -->
+
+</struts>
