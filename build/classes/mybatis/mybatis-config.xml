@@ -18,5 +18,6 @@
 	</environments>
 	<mappers>
 		<mapper resource="mybatis/MapperMemo.xml" />
+		<mapper resource="mybatis/MapperNotice.xml" />
 	</mappers>
 </configuration>

@@ -9,7 +9,7 @@
     <constant name="struts.devMode" value="false" />
 
     <package name="default" namespace="/" extends="struts-default">
-
+		
         <default-action-ref name="MemoIndex" />
 
         <global-results>
@@ -20,6 +20,7 @@
             <exception-mapping exception="java.lang.Exception" result="error"/>
         </global-exception-mappings>
         
+        <!-- Memo -->
  		<action name="MemoIndex" class="org.ahsan.board.web.MemoIndex">
  		    <result name="success">
  		        <param name="location">/board/memo/index.jsp</param>
@@ -44,8 +45,37 @@
  		        <param name="location">/board/memo/fail.jsp</param>
  		    </result>
  		</action>
+ 		
+ 		<!-- 공지게시판 -->
+ 		<action name="NoticeIndex" class="org.ahsan.board.web.NoticeIndex">
+    	    <result name="success">/board/notice/index.jsp</result>
+    	</action>
+    	<action name="NoticeWrite" class="org.ahsan.board.web.NoticeWrite">
+    	    <result name="success" type="redirectAction">NoticeIndex</result>
+    	</action>
+    	<action name="NoticeView" class="org.ahsan.board.web.NoticeView">
+    	    <result name="success">/board/notice/view.jsp</result>
+    	</action>
+    	<action name="NoticeCheckPassword" class="org.ahsan.board.web.NoticeCheckPassword">
+    	    <result name="remove" type="redirectAction">
+    	        <param name="actionName">NoticeIndex</param>
+    	        <param name="page">%{page}</param>
+    	    </result>
+    	    <result name="edit">/board/notice/edit.jsp</result>
+    	    <result name="fail">/board/notice/fail.jsp</result>
+    	</action>
+    	<action name="NoticeEdit" class="org.ahsan.board.web.NoticeEdit">
+    	    <result name="success" type="redirectAction">
+    	        <param name="actionName">NoticeView</param>
+    	        <param name="no">%{no}</param>
+    	        <param name="page">%{page}</param>
+    	        <param name="job">%{job}</param>
+    	        <param name="r">%{'n'}</param>
+    	    </result>
+    	    <result name='fail'>/board/notice/fail.jsp</result>
+    	</action>
+    	
+ 		<!-- Add packages here -->
     </package>
-
-    <!-- Add packages here -->
 
 </struts>

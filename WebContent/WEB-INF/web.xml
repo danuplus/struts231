@@ -15,6 +15,7 @@
 
     <welcome-file-list>
         <welcome-file>MemoIndex.action</welcome-file>
+        <welcome-file>NoticeIndex.action</welcome-file>
     </welcome-file-list>
 
 </web-app>
