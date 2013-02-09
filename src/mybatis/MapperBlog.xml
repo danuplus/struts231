@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.MapperBlog">
+	<select id="getTotalPage" resultType="int">
+	    select count(no) from post
+	</select>
+	<select id="getArticlesByPage" parameterType="hashmap" resultType="org.ahsan.board.domain.Blog">
+	    select * from post
+	    order by no desc
+	    limit #{start}, #{end}
+	</select>
+	<select id="getArticleByNo" parameterType="int" resultType="org.ahsan.board.domain.Blog">
+	    select * from post
+	    where no = #{no}
+	</select>
+	<select id="getAllReplyByNo" parameterType="int" resultType="org.ahsan.board.domain.Breply">
+	    select * from post_reply
+	    where ref_no = #{no}
+	    order by no
+	</select>
+	<select id="checkArticlePassword" parameterType="hashmap" resultType="int">
+	    select count(no) from post
+	    where no = #{no}
+	    and password = #{password}
+	</select>
+	<select id="checkReplPassword" parameterType="hashmap" resultType="int">
+	    select count(no) from post_reply
+	    where no = #{no}
+	    and password = #{password}
+	</select>
+	<insert id="addArticle" parameterType="org.ahsan.board.domain.Blog" useGeneratedKeys="true" keyProperty="no">
+		insert into post(title, content, writer, password, ref, reply, wdate)
+		values(#{title}, #{content}, #{writer}, #{password}, 0, 0, now())	    
+	</insert>
+	<insert id="editArticle" parameterType="org.ahsan.board.domain.Blog">
+	    update post
+	    set writer = #{writer},
+	    	password = #{password},
+	    	title = #{title},
+	    	content = #{content}
+	    where no = #{no}
+	</insert>
+	<delete id="removeArticle" parameterType="int">
+	    delete from post
+	    where no = #{no}
+	</delete>
+	<delete id="removeAllReplyByNo" parameterType="int">
+	    delete from post_reply
+	    where ref_no = #{no}
+	    order by no
+	</delete>
+	<update id="addReadCount" parameterType="int">
+	    update post
+	    set ref = ref + 1
+	    where no = #{no}
+	</update>
+	<insert id="addReply" parameterType="org.ahsan.board.domain.Breply" useGeneratedKeys="true" keyProperty="no">
+	    insert into post_reply(writer, password, memo, wdate, ref_no)
+	    values(#{writer}, #{password}, #{memo}, now(), #{ref_no})
+	</insert>
+	<delete id="removeReply" parameterType="int">
+	    delete from post_reply
+	    where no = #{no}
+	</delete>
+	<update id="updateReplyCount" parameterType="hashmap">
+	    update post
+	    set reply = reply + #{inc}
+	    where no = #{no}
+	</update>
+</mapper>

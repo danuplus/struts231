@@ -117,6 +117,53 @@
 		    </result>
 		    <result name="fail">/board/inquire/fail.jsp</result>
 		</action>
+		
+		<!-- Blog게시판 -->
+ 		<action name="BlogIndex" class="org.ahsan.board.web.BlogIndex">
+ 		    <result name="success">/board/blog/index.jsp</result>
+ 		</action>
+        <action name="BlogWrite">
+            <result name="success">/board/blog/write.jsp</result>
+        </action> 
+        <action name="BlogWriteArticle" class="org.ahsan.board.web.BlogWriteArticle">
+            <result name="success" type="redirectAction">
+                <param name="actionName">BlogIndex</param>
+            </result>
+        </action>
+        <action name="BlogView" class="org.ahsan.board.web.BlogView">
+            <result name="success">/board/blog/view.jsp</result>
+        </action>
+        <action name="BlogWriteReply" class="org.ahsan.board.web.BlogWriteReply">
+            <result name="success" type="redirectAction">
+                <param name="actionName">BlogView</param>
+                <param name="no">%{parent_no}</param>
+                <param name="page">%{page}</param>
+                <param name="r">%{"n"}</param>
+            </result>
+        </action>
+        <action name="BlogCheck">
+            <result name="success">/board/blog/check.jsp</result>
+        </action>
+        <action name="BlogCheckPassword" class="org.ahsan.board.web.BlogCheckPassword">
+            <result name="edit">/board/blog/edit.jsp</result>
+            <result name="remove_board" type="redirectAction">
+                <param name="actionName">BlogIndex</param>
+                <param name="page">%{page}</param>
+            </result>
+            <result name="remove_repl" type="redirectAction">
+                <param name="actionName">BlogView</param>
+                <param name="no">%{no}</param>
+                <param name="page">%{page}</param>
+            </result>
+            <result name="fail">/board/blog/fail.jsp</result>
+        </action>
+        <action name="BlogEditArticle" class="org.ahsan.board.web.BlogEditArticle">
+            <result name="success" type="redirectAction">
+                <param name="actionName">BlogView</param>
+                <param name="no">%{no}</param>
+                <param name="page">%{page}</param>
+            </result>
+        </action>		
  		<!-- Add packages here -->
     </package>
 
