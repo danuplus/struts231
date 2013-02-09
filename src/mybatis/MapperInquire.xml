@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.MapperInquire">
+	<select id="getTotalCount" resultType="int">
+	    select count(no) from bd_inquire
+	</select>
+	<select id="getArticlesByPage" parameterType="hashmap" resultType="org.ahsan.board.domain.Inquire">
+	    select * from bd_inquire 
+	    order by group_no desc, sequence_in_group asc limit #{start}, #{end}
+	</select>
+	<select id="getArticleByNo" parameterType="int" resultType="org.ahsan.board.domain.Inquire">
+	    select * from bd_inquire
+	    where no = #{no}
+	</select>
+	<update id="addReadCount" parameterType="int">
+	    update bd_inquire 
+	    set ref = ref + 1
+	    where no = #{no}
+	</update>
+	<update id="updateGroupNo">
+	    update bd_inquire
+	    set group_no = no
+	    where no = last_insert_id()
+	</update>
+	<update id="updateSequenceInGroup" parameterType="hashmap">
+	    update bd_inquire
+	    set sequence_in_group = sequence_in_group + 1
+	    where group_no = #{parent_group_no}
+	    and sequence_in_group > #{parent_sequence_in_group}
+	</update>
+	<insert id="addArticle" parameterType="org.ahsan.board.domain.Inquire" useGeneratedKeys="true" keyProperty="no">
+	    insert into bd_inquire(title, content, writer, password, wdate, ref, 
+	    				  group_no, sequence_in_group, indent_in_group, ref_no)
+	    values(#{title}, #{content}, #{writer}, #{password}, now(), 0, 
+	    	   #{group_no}, #{sequence_in_group}, #{indent_in_group}, #{ref_no}) 
+	</insert>
+	<update id="editArticle" parameterType="int">
+	    update bd_inquire
+	    set title = #{title},
+	    	content = #{content},
+	    	writer = #{writer},
+	    	password = #{password}
+	    where no = #{no}
+	</update>
+	<delete id="removeArticle" parameterType="int">
+	    delete from bd_inquire
+	    where no = #{no}
+	</delete>
+	<update id="updateRefNo" parameterType="int">
+	    update bd_inquire
+	    set ref_no = -1
+	    where ref_no = #{no}
+	</update>
+	<select id="checkPassword" parameterType="hashmap" resultType="int">
+	    select count(no)
+	    from bd_inquire
+	    where no = #{no}
+	    and password = #{password}
+	</select>
+</mapper>

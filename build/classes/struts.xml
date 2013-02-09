@@ -75,6 +75,48 @@
     	    <result name='fail'>/board/notice/fail.jsp</result>
     	</action>
     	
+    	<!-- 답변게시판 -->
+    	<action name="InquireIndex" class="org.ahsan.board.web.InquireIndex">
+		    <result name="success">/board/inquire/index.jsp</result>
+		</action>
+		<action name="InquireView" class="org.ahsan.board.web.InquireView">
+		    <result name="success">/board/inquire/view.jsp</result>
+		</action>
+		<action name="InquireWrite">
+		    <result name="success">/board/inquire/write.jsp</result>
+		</action>
+		<action name="InquireWriteArticle" class="org.ahsan.board.web.InquireWrite">
+		    <result name="success" type="redirectAction">InquireIndex</result>
+		</action>
+		<action name="InquireEdit" class="org.ahsan.board.web.InquireEdit">
+		    <result name="success" type="redirectAction">
+		        <param name="actionName">InquireView</param>
+		        <param name="no">%{no}</param>
+		        <param name="page">%{page}</param>
+		        <param name="r">%{"n"}</param>
+		    </result>
+		    <result name="fail">/board/inquire/fail.jsp</result>
+		</action>
+		<action name="InquireAnswer" class="org.ahsan.board.web.InquireAnswer">
+		    <result name="success">/board/inquire/answer.jsp</result>
+		</action>
+		<action name="InquireAnswerArticle" class="org.ahsan.board.web.InquireAnswerArticle">
+		    <result name="success" type="redirectAction">
+		        <param name="actionName">InquireIndex</param>
+		        <param name="page">%{page}</param>
+		    </result>
+		</action>
+		<action name="InquireCheck">
+		    <result name="success">/board/inquire/check.jsp</result>
+		</action>
+		<action name="InquireCheckPassword" class="org.ahsan.board.web.InquireCheckPassword">
+		    <result name="edit">/board/inquire/edit.jsp</result>
+		    <result name="remove" type="redirectAction">
+		        <param name="actionName">InquireIndex</param>
+		        <param name="page">%{page}</param>
+		    </result>
+		    <result name="fail">/board/inquire/fail.jsp</result>
+		</action>
  		<!-- Add packages here -->
     </package>
 

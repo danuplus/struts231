@@ -19,5 +19,6 @@
 	<mappers>
 		<mapper resource="mybatis/MapperMemo.xml" />
 		<mapper resource="mybatis/MapperNotice.xml" />
+		<mapper resource="mybatis/MapperInquire.xml" />
 	</mappers>
 </configuration>

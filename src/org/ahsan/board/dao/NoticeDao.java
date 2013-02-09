@@ -15,14 +15,14 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 public class NoticeDao {
 
 	private static final int BOARD_PER_PAGE = 15;
-	private static NoticeDao dao;
+	private static NoticeDao ndao;
 	private SqlSessionFactory ssf;
 	
 	public static NoticeDao getInstance() throws IOException {
-		if(dao == null) {
-			dao = new NoticeDao();
+		if(ndao == null) {
+			ndao = new NoticeDao();
 		}
-		return dao;
+		return ndao;
 	}
 	
 	private NoticeDao() throws IOException {
