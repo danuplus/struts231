@@ -163,8 +163,67 @@
                 <param name="no">%{no}</param>
                 <param name="page">%{page}</param>
             </result>
-        </action>		
+        </action>	
+        
+        <!-- 자유게시판 -->
+        <action name="freeindex" class="org.ahsan.board.web.FreeIndex">
+ 		    <result  name="success">/board/free/index.jsp</result>
+ 		</action>
+ 		<action name="freewrite" class="org.ahsan.board.web.FreeWrite">
+ 		    <result  name="success">/board/free/write.jsp</result>
+ 		</action>
+ 		<action name="freewrite_new" class="org.ahsan.board.web.FreeWriteNew">
+ 		    <result type="redirectAction">freeindex</result>
+ 		</action>
+ 		<action name="freeview" class="org.ahsan.board.web.FreeView">
+ 		    <result  name="success">/board/free/view.jsp</result>
+ 		</action>
+ 		<action name="freewrite_reply" class="org.ahsan.board.web.FreeWriteReply">
+ 		    <result type="redirectAction">
+ 		        <param name="actionName">freeview</param>
+ 		        <param name="no">%{pno}</param>
+ 		        <param name="page">%{page}</param>
+ 		        <param name="r">%{'n'}</param>
+ 		    </result>
+ 		</action>
+ 		<action name="freeanswer" class="org.ahsan.board.web.FreeAnswer">
+ 		    <result>/board/free/answer.jsp</result>
+ 		</action>
+ 		<action name="freewrite_answer" class="org.ahsan.board.web.FreeWriteAnswer">
+ 		    <result type="redirectAction">
+ 		        <param name="actionName">freeindex</param>
+ 		        <param name="page">%{page}</param>
+ 		    </result>
+ 		</action>
+ 		<action name="freecheck" class="org.ahsan.board.web.FreeCheck">
+ 		    <result>/board/free/check.jsp</result>
+ 		</action>
+ 		<action name="freecheck_pass" class="org.ahsan.board.web.FreeCheckPass">
+ 		    <result name="success_remove_article" type="redirectAction">
+ 		        <param name="actionName">freeindex</param>
+ 		        <param name="page">%{page}</param>
+ 		    </result>
+ 		    <result name="success_remove_reply" type="redirectAction">
+ 		        <param name="actionName">freeview</param>
+ 		        <param name="no">%{no}</param>
+ 		        <param name="page">%{page}</param>
+ 		        <param name="r">%{'n'}</param>
+ 		    </result>
+ 		    <result name="edit">/board/free/edit.jsp</result>
+ 		    <result name="failure">/board/free/failure.jsp</result>
+ 		</action> 
+ 		<action name="freeedit" class="org.ahsan.board.web.FreeEdit">
+ 		    <result type="redirectAction">
+ 		        <param name="actionName">freeview</param>
+ 		        <param name="no">%{no}</param>
+ 		        <param name="page">%{page}</param>
+ 		        <param name="r">%{'n'}</param>
+ 		    </result>
+ 		    <result name="failure">/board/free/failure.jsp</result>
+ 		</action> 
+ 			
  		<!-- Add packages here -->
+ 		
     </package>
-
+    
 </struts>

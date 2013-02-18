@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.MapperFree">
+	<select id="getTotalPage" resultType="int">
+	    select count(no) from board
+	</select>
+	<select id="getArticlesByPage" parameterType="hashmap" resultType="org.ahsan.board.domain.Free">
+	    select * from board 
+	    order by group_no desc, sequence_in_group asc
+	    limit #{start}, #{end}
+	</select>
+	<select id="getArticleByNo" parameterType="int" resultType="org.ahsan.board.domain.Free">
+	    select * from board
+	    where no = #{no}
+	</select>
+	<insert id="addArticle" parameterType="org.ahsan.board.domain.Free" useGeneratedKeys="true" keyProperty="no">
+	    insert into board(writer, password, title, content, wdate, read_cnt, reply_cnt,
+	    				  group_no, sequence_in_group, indent_in_group, ref_no)
+	    values(#{writer}, #{password}, #{title}, #{content}, now(), 0, 0,
+	    	   #{group_no}, #{sequence_in_group}, #{indent_in_group}, #{ref_no})
+	</insert>
+	<update id="updateChildSequence" parameterType="hashmap">
+	    update board
+	    set sequence_in_group = sequence_in_group + 1
+	    where group_no = #{parent_group_no}
+	    and sequence_in_group > #{parent_sequence_in_group}
+	</update>
+	<update id="updateReadCount" parameterType="int">
+	    update board
+	    set read_cnt = read_cnt + 1
+	    where no = #{no}
+	</update>
+	<update id="editArticle" parameterType="org.ahsan.board.domain.Free">
+	    update board
+	    set writer = #{writer},
+	    	password = #{password},
+	    	title = #{title},
+	    	content = #{content}
+	    where no = #{no}
+	</update>
+	<delete id="removeArticle" parameterType="int">
+	    delete from board
+	    where no = #{no}
+	</delete>
+	<select id="checkArticlePassword" parameterType="hashmap" resultType="int">
+	    select count(no)
+	    from board
+	    where no = #{no}
+	    and password = #{password}
+	</select>
+	<select id="getRelatedRepliesByNo" parameterType="int" resultType="org.ahsan.board.domain.Freply">
+	    select *
+	    from board_reply
+	    where ref_no = #{ref_no}
+	    order by no
+	</select>
+	<insert id="addReply" parameterType="org.ahsan.board.domain.Freply" useGeneratedKeys="true" keyProperty="no">
+	    insert into board_reply(writer, password, memo, wdate, ref_no)
+	    values(#{writer}, #{password}, #{memo}, now(), #{ref_no})
+	</insert>
+	<delete id="removeReply" parameterType="int">
+	    delete from board_reply
+	    where no = #{no} 
+	</delete>
+	<update id="updateReplyCount" parameterType="hashmap">
+	    update board
+	    set reply_cnt = reply_cnt + #{inc}
+	    where no = #{no}
+	</update>
+	<select id="checkReplyPassword" parameterType="hashmap" resultType="int">
+	    select count(no)
+	    from board_reply
+	    where no = #{no}
+	    and password = #{password}
+	</select>
+	<update id="updateGroupNo">
+	    update board
+	    set group_no = no
+	    where no = last_insert_id()
+	</update>
+	<update id="updateRefNo" parameterType="int">
+	    update board
+	    set ref_no = -1
+	    where ref_no = #{no}
+	</update>
+</mapper>

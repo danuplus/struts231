@@ -21,5 +21,6 @@
 		<mapper resource="mybatis/MapperNotice.xml" />
 		<mapper resource="mybatis/MapperInquire.xml" />
 		<mapper resource="mybatis/MapperBlog.xml" />
+		<mapper resource="mybatis/MapperFree.xml" />
 	</mappers>
 </configuration>

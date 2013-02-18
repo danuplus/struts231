@@ -8,3 +8,5 @@ body { font-size: 12px; font-family: sans-serif; }
 .small { font-size: 10px; }
 a { text-decoration: none; color: black; }
 img { border: 0px; }
+.button { padding: 5px 0px; background: #778899; border: 1px solid gray; }
+.button a { padding: 0px 5px; color: white; }
